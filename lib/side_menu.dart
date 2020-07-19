@@ -3,8 +3,14 @@ import 'Reusable_icons.dart';
 import 'Reusable_expansion.dart';
 import 'Reusable_tile.dart';
 
-class NavDrawer extends StatelessWidget {
+class NavDrawer extends StatefulWidget {
   @override
+  _NavDrawerState createState() => _NavDrawerState();
+}
+
+class _NavDrawerState extends State<NavDrawer> {
+  List<String> _locations = ['A', 'B', 'C', 'D']; // Option 2
+  String _selectedLocation;
   Widget build(BuildContext context) {
     return Drawer(
         child: Container(
@@ -44,11 +50,99 @@ class NavDrawer extends StatelessWidget {
                     thirdTextTile: 'Delete Student',
                   ),
                   ReusableTile(
-                    textTile: 'School',
-                    iconTile: Icons.home,
-                    secondTextTile: 'Add School',
-                    thirdTextTile: 'Delete School',
-                  ),
+                      textTile: 'School',
+                      iconTile: Icons.home,
+                      secondTextTile: 'Add School',
+                      thirdTextTile: 'Delete School',
+                      onTapped: () {
+                        Dialog errorDialog = Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  12.0)), //this right here
+                          child: Container(
+                            height: 300.0,
+                            width: 300.0,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Padding(
+                                  padding: EdgeInsets.all(15.0),
+                                  child: Text(
+                                    'Add School',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 20.0),
+                                  ),
+                                ),
+                                Padding(
+                                    padding: EdgeInsets.all(10.0),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'Add School'),
+                                    )),
+                                Padding(padding: EdgeInsets.only(top: 10.0)),
+                                DropdownButton(
+                                  hint: Text(
+                                      'Please choose a location'), // Not necessary for Option 1
+                                  value: _selectedLocation,
+                                  onChanged: (newValue) {
+                                    setState(() {
+                                      _selectedLocation = newValue;
+                                    });
+                                  },
+                                  items: _locations.map((location) {
+                                    return DropdownMenuItem(
+                                      child: new Text(location),
+                                      value: location,
+                                    );
+                                  }).toList(),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        color: Color(0xFF262AAA),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          'CANCEL',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12.0),
+                                        )),
+                                    SizedBox(
+                                      width: 25.0,
+                                    ),
+                                    RaisedButton(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      color: Color(0xFF262AAA),
+                                      padding: EdgeInsets.only(right: 5.0),
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        'OK',
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12.0),
+                                      ),
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => errorDialog);
+                      }),
                   ReusableTile(
                     textTile: 'Department',
                     iconTile: Icons.domain,
@@ -80,11 +174,94 @@ class NavDrawer extends StatelessWidget {
                       thirdTextExpansion: 'Edit Subjects',
                       fourthTextExpansion: 'Delete Subjects'),
                   ReusableTile(
-                    textTile: 'Timings',
-                    iconTile: Icons.watch_later,
-                    secondTextTile: 'Add Timings',
-                    thirdTextTile: 'Delete Timings',
-                  ),
+                      textTile: 'Timings',
+                      iconTile: Icons.watch_later,
+                      secondTextTile: 'Add Timings',
+                      thirdTextTile: 'Delete Timings',
+                      onTapped: () {
+                        Dialog errorDialog = Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  12.0)), //this right here
+                          child: Container(
+                            height: 270.0,
+                            width: 290.0,
+                            child: Expanded(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.all(15.0),
+                                    child: Text(
+                                      'Add Timings',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20.0),
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            labelText: 'Start Time'),
+                                      )),
+                                  Padding(
+                                    padding: EdgeInsets.only(left: 10.0),
+                                    child: TextFormField(
+                                      decoration: InputDecoration(
+                                          labelText: 'End Time'),
+                                    ),
+                                  ),
+                                  Padding(padding: EdgeInsets.only(top: 1.0)),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      RaisedButton(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0)),
+                                          color: Color(0xFF262AAA),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            'CANCEL',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12.0),
+                                          )),
+                                      SizedBox(
+                                        width: 25.0,
+                                      ),
+                                      RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        color: Color(0xFF262AAA),
+                                        padding: EdgeInsets.only(right: 5.0),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          'OK',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12.0),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => errorDialog);
+                      }),
                   ReusableTile(
                     textTile: 'Periods',
                     iconTile: Icons.watch_later,
@@ -92,11 +269,87 @@ class NavDrawer extends StatelessWidget {
                     thirdTextTile: 'Delete Periods',
                   ),
                   ReusableTile(
-                    textTile: 'Days',
-                    iconTile: Icons.keyboard_backspace,
-                    secondTextTile: 'Add Days',
-                    thirdTextTile: 'Delete Days',
-                  ),
+                      textTile: 'Days',
+                      iconTile: Icons.keyboard_backspace,
+                      secondTextTile: 'Add Days',
+                      thirdTextTile: 'Delete Days',
+                      onTapped: () {
+                        Dialog errorDialog = Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(
+                                  12.0)), //this right here
+                          child: Container(
+                            height: 200.0,
+                            width: 200.0,
+                            child: Expanded(
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: EdgeInsets.all(15.0),
+                                    child: Text(
+                                      'Add Days',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 20.0),
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding: EdgeInsets.all(10.0),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            labelText: 'Add Days'),
+                                      )),
+                                  Padding(padding: EdgeInsets.only(top: 10.0)),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: <Widget>[
+                                      RaisedButton(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0)),
+                                          color: Color(0xFF262AAA),
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(
+                                            'CANCEL',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 12.0),
+                                          )),
+                                      SizedBox(
+                                        width: 25.0,
+                                      ),
+                                      RaisedButton(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        color: Color(0xFF262AAA),
+                                        padding: EdgeInsets.only(right: 5.0),
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                          'OK',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 12.0),
+                                        ),
+                                      )
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => errorDialog);
+                      }),
                   ReusableExpansion(
                       textExpansion: 'TimeTable',
                       iconExpansion: Icons.insert_invitation,
